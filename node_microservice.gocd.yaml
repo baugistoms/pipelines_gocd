@@ -54,7 +54,7 @@ pipelines:
           environment_variables:
               ENV_NAME: dev
           jobs:
-            delpoy:
+            deploy:
               tasks: *deploy-tasks
       - test-dev:
           environment_variables:

@@ -3,16 +3,16 @@ format_version: 10
 common:
   deploy-tasks: &deploy-tasks
     - exec:
-      command: bash
-      arguments:
-        - -c
-        - echo "Deployment to ${ENV_NAME} environment"
+        command: bash
+        arguments:
+          - -c
+          - echo "Deployment to ${ENV_NAME} environment"
   test-tasks: &test-tasks
     - exec:
-      command: bash
-      arguments:
-        - -c
-        - echo "Testing in ${ENV_NAME}"
+        command: bash
+        arguments:
+          - -c
+          - echo "Testing in ${ENV_NAME}"
 pipelines:
   node-microservice:
     group: microservices
@@ -32,7 +32,7 @@ pipelines:
                       - echo "Building application"
       - deploy-dev:
           environment_variables:
-            ENV_NAME: dev
+              ENV_NAME: dev
           jobs:
             build:
               tasks: *deploy-tasks

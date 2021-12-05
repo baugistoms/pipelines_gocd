@@ -1,5 +1,18 @@
 ---
 format_version: 10
+common:
+  deploy-tasks: &deploy-tasks
+    - exec:
+      command: bash
+      arguments:
+        - -c
+        - echo "Deployment to ${ENV_NAME} environment"
+  test-tasks: &test-tasks
+    - exec:
+      command: bash
+      arguments:
+        - -c
+        - echo "Testing in ${ENV_NAME}"
 pipelines:
   node-microservice:
     group: microservices
@@ -15,59 +28,41 @@ pipelines:
                - exec:
                    command: bash
                    arguments:
-                    - -c
-                    - echo "Building application"
+                      - -c
+                      - echo "Building application"
       - deploy-dev:
+          environment_variables:
+            ENV_NAME: dev
           jobs:
             build:
-              tasks:
-               - exec:
-                   command: bash
-                   arguments:
-                    - -c
-                    - echo "Deployment to DEV" 
+              tasks: *deploy-tasks
       - test-dev:
+          environment_variables:
+            ENV_NAME: dev
           jobs:
             build:
-              tasks:
-               - exec:
-                   command: bash
-                   arguments:
-                    - -c
-                    - echo "Testing DEV"
+              tasks: *test-tasks
       - deploy-int:
+          environment_variables:
+            ENV_NAME: int
           jobs:
             build:
-              tasks:
-               - exec:
-                   command: bash
-                   arguments:
-                    - -c
-                    - echo "Deployment to INT" 
+              tasks: *deploy-tasks
       - test-int:
+          environment_variables:
+            ENV_NAME: int
           jobs:
             build:
-              tasks:
-               - exec:
-                   command: bash
-                   arguments:
-                    - -c
-                    - echo "Testing INT"
+              tasks: *test-tasks
       - deploy-prod:
+          environment_variables:
+            ENV_NAME: prod
           jobs:
             build:
-              tasks:
-               - exec:
-                   command: bash
-                   arguments:
-                    - -c
-                    - echo "Deployment to PROD" 
+              tasks: *deploy-tasks
       - test-prod:
+          environment_variables:
+            ENV_NAME: prod
           jobs:
             build:
-              tasks:
-               - exec:
-                   command: bash
-                   arguments:
-                    - -c
-                    - echo "Testing PROD" 
+              tasks: *test-tasks
